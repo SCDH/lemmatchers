@@ -4,6 +4,9 @@
 # Local cabal content directory in CI
 .cabal-dir
 
+# LibreOffice
+.~*#
+
 # GitHub default Haskell gitignore rules
 dist
 dist-*
