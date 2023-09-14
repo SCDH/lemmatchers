@@ -68,10 +68,12 @@ executable verhelst-parser
     -- other-extensions:
 
     -- Other library packages from which modules are imported.
-    build-depends:    base ^>=4.14.3.0
+    build-depends:    base ^>=4.14.3.0, bytestring, cassava, vector, encode-string
 
     -- Directories containing source files.
     hs-source-dirs:   app
 
     -- Base language which the package is written in.
     default-language: Haskell2010
+
+    default-extensions: OverloadedStrings
