@@ -1,0 +1,13 @@
+matcher Two Tier
+PN N DET PN
+
+---
+
+matcher Three Tier
+PN N DET PN N LN
+
+---
+
+matcher Probleme
+N PN
+PN N N DN N DET PN N LN

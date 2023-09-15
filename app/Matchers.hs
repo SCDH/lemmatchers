@@ -1,17 +1,23 @@
+{-# LANGUAGE OverloadedStrings #-}
+
 module Matchers where
 
 import TagRecords
 import Data.Bool
 import Data.List
+import Data.String.Encode
+import Data.Bifunctor
 import qualified Text.Read as R
 import Text.ParserCombinators.ReadP
 import Control.Applicative (Alternative, liftA2, empty)
 import Control.Monad
+import Data.Csv
 
-lb, line, sep :: String
+lb, rn, line, sep :: String
 lb    = "\n" -- "\r\n" would work, too
+rn    = "\r\n"
 line  = "---"
-sep   = lb ++ lb ++ line ++ lb ++ lb
+sep   = lb ++ line ++ lb ++ lb
 
 plb, pline, psep :: ReadP ()
 plb   = void $ optional (char '\r') >> char '\n'
@@ -51,7 +57,7 @@ instance Read Matcher where
 
 parseMatcher :: ReadP Matcher
 parseMatcher = do
-    n   <- string "matcher " >> munch1 (`notElem` "\r\n")
+    n   <- string "matcher " >> munch1 (`notElem` rn)
     ps  <- plb >> sepBy1 patternParser plb
     return $ Matcher n ps
 
@@ -114,6 +120,16 @@ data Match = Match
 instance Show Match where
   show (Match m p fid fd fl) = intercalate " ; "
     [name m, show p, fid, fd, shortShow (Lemmas fl)]
+
+instance ToNamedRecord Match where
+  toNamedRecord (Match m p fid fd fl) = namedRecord $
+    map (second convertString)
+      [ ("matcher",     name m)
+      , ("pattern",     show p)
+      , ("id_text",     fid)
+      , ("Designation", fd)
+      , ("lemma",       shortShow (Lemmas fl))
+      ]
 
 -------------------------------
 
