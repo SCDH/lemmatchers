@@ -34,8 +34,8 @@ main = do
 
   -- Match!
   let results = concat  [ matchRecord m lr
-                        | m   <- matchers recordMatchers
-                        , lr  <- records
+                          | m   <- matchers recordMatchers
+                          , lr  <- records
                         ]
 
   -- Report!
