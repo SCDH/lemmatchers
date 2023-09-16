@@ -40,7 +40,7 @@ instance Read Matchers where
   readsPrec _ = readP_to_S parseMatchers
 
 parseMatchers :: ReadP Matchers
-parseMatchers = Matchers <$> sepBy1 parseMatcher psep
+parseMatchers = Matchers <$> parseMatcher `sepBy1` psep
 
 -------------------------------
 
@@ -58,7 +58,7 @@ instance Read Matcher where
 parseMatcher :: ReadP Matcher
 parseMatcher = do
     n   <- string "matcher " >> munch1 (`notElem` rn)
-    ps  <- plb >> sepBy1 patternParser plb
+    ps  <- plb >> patternParser `sepBy1` plb
     return $ Matcher n ps
 
 -------------------------------
@@ -74,7 +74,7 @@ instance Read Pattern where
   readsPrec _ = readP_to_S patternParser
 
 patternParser :: ReadP Pattern
-patternParser = Pattern <$> sepBy1 matchItemParser (char ' ')
+patternParser = Pattern <$> matchItemParser `sepBy1` char ' '
 
 -------------------------------
 
@@ -103,7 +103,7 @@ matchItemParser = choice [exact, notmi, oneof, noneof, anymi]
         oneof     =             OneOf   <$> tags
         noneof    = char '-' >> NoneOf  <$> tags
         anymi     = char '*' >> return Any
-        tags      = between (char '(') (char ')') $ sepBy1 tag (char ' ')
+        tags      = between (char '(') (char ')') $ tag `sepBy1` char ' '
         tag       = maybe pfail return . R.readMaybe =<< ucToken
         ucToken   = munch1 (`elem` ['A'..'Z'])
 
