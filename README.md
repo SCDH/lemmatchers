@@ -20,7 +20,7 @@ cabal run verhelst-parser
 
 ## Dateien
 
-Aktuell werden die Daten aus `data/data.csv` geleset, die Matcher aus `data/matchers.txt` gelesen und die Ergebnisse nach `data/results.csv` geschrieben.
+Aktuell werden die Daten aus `data/data.csv` gelesen, die Matcher aus `data/matchers.txt` gelesen und die Ergebnisse nach `data/results.csv` geschrieben.
 
 ## Matcher
 
