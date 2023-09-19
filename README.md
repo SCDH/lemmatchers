@@ -1,4 +1,4 @@
-# Babylonian Matchers
+# *Lemma*tchers
 
 **Search tag sequences in large lemma data**
 
@@ -15,7 +15,7 @@ cabal build
 ## Run
 
 ```
-cabal run verhelst-parser
+cabal run lemmatchers
 ```
 
 ## Dateien
