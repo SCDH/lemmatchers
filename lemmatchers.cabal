@@ -41,12 +41,12 @@ executable lemmatchers
 
 test-suite lemmatchers-test
   default-language:   Haskell2010
+  default-extensions: OverloadedStrings
   type:               exitcode-stdio-1.0
   hs-source-dirs:     test
   build-depends:      base ^>=4.14.3.0
                     , hspec
-                    , QuickCheck
+                    , lemmatchers
   main-is:            run-all-tests.hs
-  other-modules:      Lemmatchers.MatchersSpec
-                    , Lemmatchers.TagRecordsSpec
+  other-modules:      LemmatchersSpec
   build-tool-depends: hspec-discover:hspec-discover
