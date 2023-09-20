@@ -1,5 +1,3 @@
-{-# LANGUAGE OverloadedStrings #-}
-
 module Lemmatchers.Matchers where
 
 import Lemmatchers.TagRecords

@@ -1,5 +1,3 @@
-{-# LANGUAGE OverloadedStrings #-}
-
 module Lemmatchers.TagRecords where
 
 import Data.String.Encode

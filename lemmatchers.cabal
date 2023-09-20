@@ -15,6 +15,7 @@ common warnings
 
 library
   default-language:   Haskell2010
+  default-extensions: OverloadedStrings
   exposed-modules:    Lemmatchers.TagRecords
                     , Lemmatchers.Matchers
   build-depends:      base ^>=4.14.3.0
