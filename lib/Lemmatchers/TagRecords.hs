@@ -1,6 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module TagRecords where
+module Lemmatchers.TagRecords where
 
 import Data.String.Encode
 import Data.Csv

@@ -1,8 +1,8 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module Matchers where
+module Lemmatchers.Matchers where
 
-import TagRecords
+import Lemmatchers.TagRecords
 import Data.Bool
 import Data.List
 import Data.String.Encode

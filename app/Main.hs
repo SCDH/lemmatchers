@@ -1,7 +1,7 @@
 module Main where
 
-import Matchers
-import TagRecords
+import Lemmatchers.Matchers
+import Lemmatchers.TagRecords
 import Data.Csv
 import Data.String.Encode
 import qualified Data.ByteString.Lazy as BS

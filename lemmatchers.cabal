@@ -13,11 +13,21 @@ extra-source-files: data/*
 common warnings
   ghc-options:      -Wall
 
+library
+  default-language: Haskell2010
+  exposed-modules:  Lemmatchers.TagRecords
+                  , Lemmatchers.Matchers
+  build-depends:    base ^>=4.14.3.0
+                  , cassava
+                  , encode-string
+  hs-source-dirs:   lib
+
 executable lemmatchers
   import:           warnings
   main-is:          Main.hs
-  other-modules:    TagRecords, Matchers
+  other-modules:
   build-depends:    base ^>=4.14.3.0
+                  , lemmatchers
                   , bytestring
                   , cassava
                   , vector
