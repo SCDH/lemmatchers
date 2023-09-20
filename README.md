@@ -15,7 +15,7 @@ cabal build
 ## Run
 
 ```
-cabal run lemmatchers-cli
+cabal run lemmatchers
 ```
 
 ## Dateien
