@@ -1,6 +1,7 @@
-build:
+build_and_test:
   image: haskell:8.10.7
   script:
     - cabal update
-    - cabal build --only-dependencies
-    - cabal build
+    - cabal build --only-dependencies --enable-tests
+    - cabal build --enable-tests
+    - cabal test --test-show-details=direct

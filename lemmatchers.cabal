@@ -19,8 +19,10 @@ library
   exposed-modules:    Lemmatchers.TagRecords
                     , Lemmatchers.Matchers
   build-depends:      base ^>=4.14.3.0
+                    , bytestring
                     , cassava
                     , encode-string
+                    , vector
   hs-source-dirs:     lib
 
 executable lemmatchers
@@ -36,3 +38,15 @@ executable lemmatchers
                     , filepath
   hs-source-dirs:     app
   default-language:   Haskell2010
+
+test-suite lemmatchers-test
+  default-language:   Haskell2010
+  default-extensions: OverloadedStrings
+  type:               exitcode-stdio-1.0
+  hs-source-dirs:     test
+  build-depends:      base ^>=4.14.3.0
+                    , hspec
+                    , lemmatchers
+  main-is:            run-all-tests.hs
+  other-modules:      LemmatchersSpec
+  build-tool-depends: hspec-discover:hspec-discover
