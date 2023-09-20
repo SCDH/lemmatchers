@@ -2,6 +2,8 @@ module Lemmatchers.TagRecords where
 
 import Data.String.Encode
 import Data.Csv
+import qualified Data.ByteString.Lazy as BS
+import qualified Data.Vector as V
 import Text.Read
 import Text.ParserCombinators.ReadP
 import Control.Monad
@@ -65,6 +67,9 @@ instance FromNamedRecord LemmaRecord where
   parseNamedRecord r = LR <$> r .: "id_text"
                           <*> r .: "Designation"
                           <*> r .: "lemma"
+
+csvToLemmaRecords :: BS.ByteString -> [LemmaRecord]
+csvToLemmaRecords = either fail (V.toList . snd) . decodeByName
 
 -- Short Stringification ------
 

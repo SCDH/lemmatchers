@@ -5,6 +5,8 @@ import Data.Bool
 import Data.List
 import Data.String.Encode
 import Data.Bifunctor
+import qualified Data.ByteString.Lazy as BS
+import qualified Data.Vector as V
 import qualified Text.Read as R
 import Text.ParserCombinators.ReadP
 import Control.Applicative (Alternative, liftA2, empty)
@@ -128,6 +130,11 @@ instance ToNamedRecord Match where
       , ("Designation", fd)
       , ("lemma",       shortShow (Lemmas fl))
       ]
+
+matchesToCsv :: [Match] -> BS.ByteString
+matchesToCsv = encodeByName hdr
+  where hdr = V.fromList $ map convertString $ words
+              "matcher pattern id_text Designation lemma"
 
 -------------------------------
 

@@ -19,8 +19,10 @@ library
   exposed-modules:    Lemmatchers.TagRecords
                     , Lemmatchers.Matchers
   build-depends:      base ^>=4.14.3.0
+                    , bytestring
                     , cassava
                     , encode-string
+                    , vector
   hs-source-dirs:     lib
 
 executable lemmatchers

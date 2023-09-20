@@ -2,22 +2,17 @@ module Main where
 
 import Lemmatchers.Matchers
 import Lemmatchers.TagRecords
-import Data.Csv
-import Data.String.Encode
 import qualified Data.ByteString.Lazy as BS
-import qualified Data.Vector as V
 import System.FilePath
 
 readMatchers :: FilePath -> IO Matchers
-readMatchers = fmap read . readFile
+readMatchers fp = read <$> readFile fp
 
 readRecords :: FilePath -> IO [LemmaRecord]
-readRecords = fmap (either fail (V.toList . snd) . decodeByName) . BS.readFile
+readRecords fp = csvToLemmaRecords <$> BS.readFile fp
 
 writeResults :: [Match] -> FilePath -> IO ()
-writeResults ms fp = BS.writeFile fp $ encodeByName hdr ms
-  where hdr = V.fromList $ map convertString $ words
-              "matcher pattern id_text Designation lemma"
+writeResults ms fp = BS.writeFile fp $ matchesToCsv ms
 
 main :: IO ()
 main = do
