@@ -36,3 +36,15 @@ executable lemmatchers
                     , filepath
   hs-source-dirs:     app
   default-language:   Haskell2010
+
+test-suite lemmatchers-test
+  default-language:   Haskell2010
+  type:               exitcode-stdio-1.0
+  hs-source-dirs:     test
+  build-depends:      base ^>=4.14.3.0
+                    , hspec
+                    , QuickCheck
+  main-is:            run-all-tests.hs
+  other-modules:      Lemmatchers.MatchersSpec
+                    , Lemmatchers.TagRecordsSpec
+  build-tool-depends: hspec-discover:hspec-discover

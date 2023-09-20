@@ -6,13 +6,21 @@
 
 - Standard Haskell environment (GHC, cabal)
 
-## Build
+## Build & Run
+
+Build with dependencies:
 
 ```
-cabal build
+cabal build --enable-tests
 ```
 
-## Run
+Run tests:
+
+```
+cabal test --test-show-details=direct
+```
+
+Run the program:
 
 ```
 cabal run lemmatchers
