@@ -1,8 +1,9 @@
 module Main where
 
 import Data.Proxy
-import Text.Blaze.Html5 (Html)
+import Text.Blaze.Html5 (Html, (!))
 import qualified Text.Blaze.Html5 as H
+import Text.Blaze.Html5.Attributes
 import Servant.API
 import Servant
 import Servant.HTML.Blaze
@@ -14,6 +15,7 @@ handleHelloWorld :: Handler Html
 handleHelloWorld = return $ do
   H.docTypeHtml $ do
     H.head $ do
+      H.meta ! name "viewport" ! content "width=device-width,initial-scale=1.0"
       H.title "Lemmatchers"
     H.body $ do
       H.p "Hello, world!"
