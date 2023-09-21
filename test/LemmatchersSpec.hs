@@ -9,7 +9,7 @@ import System.FilePath
 import System.IO.Temp
 
 spec :: Spec
-spec = describe "Lemmatchers tests" $ do
+spec = do
   simpleExample
 
 simpleExample :: Spec
