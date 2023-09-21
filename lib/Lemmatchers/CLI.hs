@@ -1,4 +1,4 @@
-module Lemmatchers.Main where
+module Lemmatchers.CLI where
 
 import Lemmatchers.Matchers
 import Lemmatchers.TagRecords

@@ -3,7 +3,7 @@ module LemmatchersSpec where
 import Test.Hspec
 import Lemmatchers.Matchers
 import Lemmatchers.TagRecords
-import Lemmatchers.Main
+import Lemmatchers.CLI
 import Data.String.Encode
 import System.FilePath
 import System.IO.Temp

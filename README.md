@@ -20,10 +20,12 @@ Run tests:
 cabal test --test-show-details=direct
 ```
 
-Run command line interface (works with STDIN/STDOUT):
+### Run command line interface
+
+Works with STDIN/STDOUT:
 
 ```
-cabal run -v0 lemmatchers matchers_file < input.csv > results.csv
+cabal run -v0 lemmatchers-cli matchers_file < input.csv > results.csv
 ```
 
 ## Matcher

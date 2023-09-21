@@ -1,6 +1,6 @@
 module Main where
 
-import Lemmatchers.Main
+import Lemmatchers.CLI
 import System.Environment
 
 main :: IO ()
