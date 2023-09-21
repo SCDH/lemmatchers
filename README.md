@@ -42,16 +42,16 @@ PN N DET PN N LN
 ---
 
 matcher Probleme
-N PN
-PN N N DN N DET PN N LN
+(N PN) CNJ
+PN -(DN N) * -PN
 ```
 
 Diese Matcher "treffen" genau die dort durch Leerzeichen getrennten Lemmata in der definierten Reihenfolge. Jede durch Leerzeichen getrennte Stelle entspricht einem Lemma, es kann nichts übersprungen werden. Es sind jedoch äußerst flexible Prädikate für einzelne Lemmata möglich:
 
-- `NU` trifft nur den Tag `NU`.
-- `-QP` trifft alles bis auf den Tag `QP`.
-- `(GN REL XP)` trifft die Tags `GN` **oder** `REL` **oder** `XP`. (Beliebige Länge erlaubt.)
-- `-(PRP QN)` trifft alle Tags, die **nicht** `PRP` **und nicht** `QN` sind. (Beliebige Länge erlaubt.)
+- `CNJ` trifft nur den Tag `CNJ`.
+- `-PN` trifft alles bis auf den Tag `PN`.
+- `(N PN)` trifft die Tags `N` **oder** `PN`. (Beliebige Länge erlaubt.)
+- `-(DN N)` trifft alle Tags, die **nicht** `DN` **und nicht** `N` sind. (Beliebige Länge erlaubt.)
 - `*` trifft alle Tags.
 
 Eine Analyse der Beispieldaten hat folgende erlaubte Tags ergeben:
