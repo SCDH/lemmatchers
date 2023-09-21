@@ -3,6 +3,10 @@ module LemmatchersSpec where
 import Test.Hspec
 import Lemmatchers.Matchers
 import Lemmatchers.TagRecords
+import Lemmatchers.Main
+import Data.String.Encode
+import System.FilePath
+import System.IO.Temp
 
 spec :: Spec
 spec = describe "Lemmatchers tests" $ do
@@ -92,3 +96,12 @@ simpleExample = describe "Simple example" $ do
       csvToLemmaRecords lemmaDataCsv `shouldBe` lemmaRecords
     it "Correct matching results CSV export" $
       matchesToCsv matches `shouldBe` resultsCsv
+
+  context "Command line interface" $ do
+    results <- runIO $ withSystemTempDirectory "lemmatcher" $ \dir -> do
+      let matchers  = dir </> "matchers.txt"
+          input     = getLenient $ convertString lemmaDataCsv
+      writeFile matchers matchersString
+      run [matchers] input
+    it "Result is correct CSV data" $
+      convertString results `shouldBe` resultsCsv

@@ -20,15 +20,11 @@ Run tests:
 cabal test --test-show-details=direct
 ```
 
-Run the program:
+Run command line interface (works with STDIN/STDOUT):
 
 ```
-cabal run lemmatchers
+cabal run -v0 lemmatchers matchers_file < input.csv > results.csv
 ```
-
-## Dateien
-
-Aktuell werden die Daten aus `data/data.csv` gelesen, die Matcher aus `data/matchers.txt` gelesen und die Ergebnisse nach `data/results.csv` geschrieben.
 
 ## Matcher
 
