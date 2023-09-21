@@ -8,7 +8,10 @@ author:               Mirko Westermeier
 maintainer:           mirko.westermeier@uni-muenster.de
 copyright:            (c) 2023 Mirko Westermeier, Service Center for Digital Humanities, University of Münster
 category:             Data
+extra-doc-files:      CODE_OF_CONDUCT.md
+                    , README.md
 extra-source-files:   data/*
+                    , extract_tags.pl
 
 common warnings
   ghc-options:        -Wall
