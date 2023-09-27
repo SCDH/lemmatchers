@@ -45,15 +45,18 @@ executable lemmatchers-web
   build-depends:      base ^>=4.14.3.0
                     , lemmatchers
                     , blaze-html
+                    , http-api-data
                     , servant
                     , servant-server
                     , servant-blaze
+                    , text
                     , warp
   hs-source-dirs:     web
   default-language:   Haskell2010
   default-extensions: OverloadedStrings
                     , DataKinds
                     , TypeOperators
+                    , DeriveGeneric
 
 test-suite lemmatchers-test
   default-language:   Haskell2010

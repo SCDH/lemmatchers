@@ -1,28 +1,75 @@
 module Main where
 
 import Data.Proxy
+import Data.Text (Text)
 import Text.Blaze.Html5 (Html, (!))
 import qualified Text.Blaze.Html5 as H
-import Text.Blaze.Html5.Attributes
+import qualified Text.Blaze.Html5.Attributes as A
 import Servant.API
 import Servant
 import Servant.HTML.Blaze
 import Network.Wai.Handler.Warp
+import Web.FormUrlEncoded
+import GHC.Generics
+import Control.Monad.IO.Class
 
-type LemmatchersAPI = Get '[HTML] Html
+data MatcherForm = MatcherForm
+  { dummy       :: Text
+  , mfMatchers  :: Text
+  } deriving (Eq, Show, Generic)
 
-handleHelloWorld :: Handler Html
-handleHelloWorld = return $ do
-  H.docTypeHtml $ do
-    H.head $ do
-      H.meta ! name "viewport" ! content "width=device-width,initial-scale=1.0"
-      H.title "Lemmatchers"
-    H.body $ do
-      H.p "Hello, world!"
+instance FromForm MatcherForm
+
+type LemmatchersAPI
+    =   Get '[HTML] Html
+  :<|>  "match" :> ReqBody '[FormUrlEncoded] MatcherForm :> Post '[HTML] Html
+
+lemmatchers :: Application
+lemmatchers = serve (Proxy :: Proxy LemmatchersAPI)
+  $     handleMatcherForm
+  :<|>  handleMatching
+
+handleMatcherForm :: Handler Html
+handleMatcherForm = do
+  defaultMatchers <- liftIO $ readFile "data/matchers.txt"
+  return $ template "Lemmatchers" $ do
+    H.h1 "Lemmatchers"
+    H.form  ! A.action "#"
+            ! A.method "post"
+            $ do
+      H.fieldset $ do
+        H.legend "Input data"
+        H.p "Please provide the input data as a CSV file:"
+        H.p $ H.input ! A.type_ "text"
+                      ! A.id    "dummy"
+                      ! A.name  "dummy"
+      H.fieldset $ do
+        H.legend "Matcher rules"
+        H.textarea  ! A.id    "mfMatchers"
+                    ! A.name  "mfMatchers"
+                    ! A.rows  "15"
+                    ! A.cols  "30"
+                    $ H.string defaultMatchers
+      H.fieldset $ do
+        H.legend "Match!"
+        H.p "You will receive a (possibly large) CSV file with matching results."
+        H.p $ H.input ! A.type_ "submit"
+                      ! A.value "May the matching begin!"
+
+handleMatching :: MatcherForm -> Handler Html
+handleMatching mf = undefined
 
 main :: IO ()
 main = do
   let port = 4217
   putStrLn $ "Serving Lemmatchers from port " ++ show port ++ "..."
-  run port $ serve (Proxy :: Proxy LemmatchersAPI)
-    $ handleHelloWorld
+  run port lemmatchers
+
+template :: Html -> Html -> Html
+template hTitle hBody = do
+    H.docTypeHtml $ do
+      H.head $ do
+        H.meta ! A.name "viewport" ! A.content "width=device-width,initial-scale=1.0"
+        H.title hTitle
+      H.body $ do
+        hBody
