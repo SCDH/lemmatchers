@@ -2,12 +2,13 @@ module Main where
 
 import Data.Proxy
 import Data.Text (Text)
-import Text.Blaze.Html5 (Html, (!))
+import Text.Blaze.Html5 (Html)
 import qualified Text.Blaze.Html5 as H
 import qualified Text.Blaze.Html5.Attributes as A
 import Servant.API
 import Servant
 import Servant.HTML.Blaze
+import Text.Blaze
 import Network.Wai.Handler.Warp
 import Web.FormUrlEncoded
 import GHC.Generics
@@ -20,21 +21,28 @@ data MatcherForm = MatcherForm
 
 instance FromForm MatcherForm
 
-type LemmatchersAPI
-    =   Get '[HTML] Html
-  :<|>  "match" :> ReqBody '[FormUrlEncoded] MatcherForm :> Post '[HTML] Html
+type LemmatchersAPI = FormAPI :<|> MatchingAPI
+type FormAPI        = Get '[HTML] Html
+type MatchingAPI    = "match" :> ReqBody '[FormUrlEncoded] MatcherForm
+                              :> Post '[HTML] Html
+
+lemmatchersAPI  :: Proxy LemmatchersAPI
+formAPI         :: Proxy FormAPI
+matchingAPI     :: Proxy MatchingAPI
+lemmatchersAPI  = Proxy
+formAPI         = Proxy
+matchingAPI     = Proxy
 
 lemmatchers :: Application
-lemmatchers = serve (Proxy :: Proxy LemmatchersAPI)
-  $     handleMatcherForm
-  :<|>  handleMatching
+lemmatchers = serve lemmatchersAPI  $   handleForm
+                                  :<|>  handleMatching
 
-handleMatcherForm :: Handler Html
-handleMatcherForm = do
+handleForm :: Handler Html
+handleForm = do
   defaultMatchers <- liftIO $ readFile "data/matchers.txt"
   return $ template "Lemmatchers" $ do
     H.h1 "Lemmatchers"
-    H.form  ! A.action "#"
+    H.form  ! A.action (textValue $ toUrlPiece $ safeLink lemmatchersAPI matchingAPI)
             ! A.method "post"
             $ do
       H.fieldset $ do

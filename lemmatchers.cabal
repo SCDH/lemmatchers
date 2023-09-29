@@ -45,6 +45,7 @@ executable lemmatchers-web
   build-depends:      base ^>=4.14.3.0
                     , lemmatchers
                     , blaze-html
+                    , blaze-markup
                     , http-api-data
                     , servant
                     , servant-server
