@@ -46,18 +46,25 @@ executable lemmatchers-web
                     , lemmatchers
                     , blaze-html
                     , blaze-markup
+                    , bytestring
+                    , cassava
+                    , extra
                     , http-api-data
+                    , http-client
                     , servant
                     , servant-server
                     , servant-blaze
+                    , servant-multipart
+                    , servant-cassava
                     , text
+                    , vector
                     , warp
   hs-source-dirs:     web
   default-language:   Haskell2010
   default-extensions: OverloadedStrings
                     , DataKinds
                     , TypeOperators
-                    , DeriveGeneric
+                    , MultiParamTypeClasses
 
 test-suite lemmatchers-test
   default-language:   Haskell2010
