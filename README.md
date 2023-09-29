@@ -33,6 +33,17 @@ $ compiled/lemmatchers-web
 Serving Lemmatchers from port 4217...
 ```
 
+## Dockerized web interface
+
+This repository contains a Dockerfile, so you can built and run a container with standard docker procedures:
+
+```
+$ docker build -t lemmatchers-web .
+$ docker run -dp 8080:4217 lemmatchers-web
+```
+
+to run the web interface at `http://localhost:8080`.
+
 ## Matcher
 
 Die Matcher sind mit `---` und Leerzeilen getrennt und können mehrere Pattern enthalten:
