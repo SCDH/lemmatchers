@@ -28,6 +28,12 @@ Works with STDIN/STDOUT:
 cabal run -v0 lemmatchers-cli matchers_file < input.csv > results.csv
 ```
 
+### Run the web frontend
+
+```
+cabal run -v0 lemmatchers-web
+```
+
 ## Matcher
 
 Die Matcher sind mit `---` und Leerzeilen getrennt und können mehrere Pattern enthalten:

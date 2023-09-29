@@ -131,10 +131,12 @@ instance ToNamedRecord Match where
       , ("lemma",       shortShow (Lemmas fl))
       ]
 
+instance DefaultOrdered Match where
+  headerOrder _ = V.fromList $ map convertString $ words
+    "matcher pattern id_text Designation lemma"
+
 matchesToCsv :: [Match] -> BS.ByteString
-matchesToCsv = encodeByName hdr
-  where hdr = V.fromList $ map convertString $ words
-              "matcher pattern id_text Designation lemma"
+matchesToCsv = encodeDefaultOrderedByName
 
 -------------------------------
 
