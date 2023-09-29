@@ -51,29 +51,35 @@ lemmatchers = serve lemmatchersAPI  $   handleForm
 
 handleForm :: Handler Html
 handleForm = do
+  let formURL = toUrlPiece $ safeLink lemmatchersAPI matchingAPI
   defaultMatchers <- liftIO $ readFile "data/matchers.txt"
-  return $ template "Lemmatchers" $ do
-    H.h1 "Lemmatchers"
-    H.form  ! A.action (textValue $ toUrlPiece $ safeLink lemmatchersAPI matchingAPI)
-            ! A.method "post"
-            ! A.enctype "multipart/form-data"
-            $ do
-      H.fieldset $ do
-        H.legend "Input data"
-        H.p "Please provide the input data as a CSV file:"
-        H.p $ H.input ! A.type_ "file"
-                      ! A.name  "lemmasCSV"
-      H.fieldset $ do
-        H.legend "Matcher rules"
-        H.textarea  ! A.name  "matchers"
-                    ! A.rows  "15"
-                    ! A.cols  "30"
-                    $ H.string defaultMatchers
-      H.fieldset $ do
-        H.legend "Match!"
-        H.p "You will receive a (possibly large) CSV file with matching results."
-        H.p $ H.input ! A.type_ "submit"
-                      ! A.value "May the matching begin!"
+  return $ do
+    H.docTypeHtml $ do
+      H.head $ do
+        H.meta ! A.name "viewport" ! A.content "width=device-width,initial-scale=1.0"
+        H.title "Lemmatchers"
+      H.body $ do
+        H.h1 "Lemmatchers"
+        H.form  ! A.action (textValue formURL)
+                ! A.method "post"
+                ! A.enctype "multipart/form-data"
+                $ do
+          H.fieldset $ do
+            H.legend "Input data"
+            H.p "Please provide the input data as a CSV file:"
+            H.p $ H.input ! A.type_ "file"
+                          ! A.name  "lemmasCSV"
+          H.fieldset $ do
+            H.legend "Matcher rules"
+            H.textarea  ! A.name  "matchers"
+                        ! A.rows  "15"
+                        ! A.cols  "30"
+                        $ H.string defaultMatchers
+          H.fieldset $ do
+            H.legend "Match!"
+            H.p "You will receive a (possibly large) CSV file with matching results."
+            H.p $ H.input ! A.type_ "submit"
+                          ! A.value "May the matching begin!"
 
 handleMatching :: MatcherFormData -> Handler [Match]
 handleMatching (MFD ms lrs) =
@@ -84,12 +90,3 @@ main = do
   let port = 4217
   putStrLn $ "Serving Lemmatchers from port " ++ show port ++ "..."
   run port lemmatchers
-
-template :: Html -> Html -> Html
-template hTitle hBody = do
-    H.docTypeHtml $ do
-      H.head $ do
-        H.meta ! A.name "viewport" ! A.content "width=device-width,initial-scale=1.0"
-        H.title hTitle
-      H.body $ do
-        hBody
