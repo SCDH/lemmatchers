@@ -8,30 +8,29 @@
 
 ## Build & Run
 
-Build with dependencies:
+This package uses standard cabal procedures like these to build, test and run the executables as well as a `ghci` with the `Lemmatchers` library pre-loaded:
 
 ```
-cabal build --enable-tests
+$ cabal build --enable-tests
+$ cabal test --test-show-details=direct
+$ cabal run -v0 lemmatchers-cli matchers_file < input.csv > results.csv
+$ cabal run -v0 lemmatchers-web
+$ cabal repl
 ```
 
-Run tests:
+but there's also a [Makefile](Makefile) to make it easy to compile the programs `lemmatchers-cli` and `lemmatchers-web` as executable files in the `compiled` directory with `make install`:
+
+The command line interface expects a matchers file as command line argument, reads CSV from STDIN and writes CSV to STDOUT:
 
 ```
-cabal test --test-show-details=direct
+$ compiled/lemmatchers-cli data/matchers.txt < data/data.csv > results.csv
 ```
 
-### Run command line interface
-
-Works with STDIN/STDOUT:
+To have the web interface at `http://localhost:4217/`, just call the web backend without arguments:
 
 ```
-cabal run -v0 lemmatchers-cli matchers_file < input.csv > results.csv
-```
-
-### Run the web frontend
-
-```
-cabal run -v0 lemmatchers-web
+$ compiled/lemmatchers-web
+Serving Lemmatchers from port 4217...
 ```
 
 ## Matcher

@@ -10,7 +10,8 @@ copyright:            (c) 2023 Mirko Westermeier, Service Center for Digital Hum
 category:             Data
 extra-doc-files:      CODE_OF_CONDUCT.md
                     , README.md
-extra-source-files:   data/*
+extra-source-files:   data/*.csv
+                    , data/matchers.txt
                     , extract_tags.pl
 
 common warnings
