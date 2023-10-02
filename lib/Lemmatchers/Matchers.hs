@@ -57,9 +57,9 @@ instance Read Matcher where
 
 parseMatcher :: ReadP Matcher
 parseMatcher = do
-    n   <- string "matcher " >> munch1 (`notElem` rn)
-    ps  <- plb >> patternParser `sepBy1` plb
-    return $ Matcher n ps
+  n   <- string "matcher " >> munch1 (`notElem` rn)
+  ps  <- plb >> parsePattern `sepBy1` plb
+  return $ Matcher n ps
 
 -------------------------------
 
@@ -71,10 +71,10 @@ instance Show Pattern where
   show = unwords . map show . items
 
 instance Read Pattern where
-  readsPrec _ = readP_to_S patternParser
+  readsPrec _ = readP_to_S parsePattern
 
-patternParser :: ReadP Pattern
-patternParser = Pattern <$> matchItemParser `sepBy1` char ' '
+parsePattern :: ReadP Pattern
+parsePattern = Pattern <$> matchItemParser `sepBy1` char ' '
 
 -------------------------------
 
