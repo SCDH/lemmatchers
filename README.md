@@ -2,6 +2,9 @@
 
 **Search tag sequences in large lemma data**
 
+[![build, test, docs](https://github.com/SCDH/lemmatchers/actions/workflows/haskell-ci.yml/badge.svg)](https://github.com/SCDH/lemmatchers/actions/workflows/haskell-ci.yml)
+[![API docs](https://img.shields.io/badge/API_docs-Haddock-mediumorchid?logo=bookstack&logoColor=lightgrey&labelColor=333)](https://scdh.github.io/lemmatchers/)
+
 ## Requirements
 
 - Standard Haskell environment (GHC, cabal)

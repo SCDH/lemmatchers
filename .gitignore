@@ -7,6 +7,9 @@
 # Local cabal content directory in CI
 .cabal-dir
 
+# Generated documentation
+haddock_build
+
 # LibreOffice
 .~*#
 
