@@ -1,7 +1,32 @@
-build_and_test:
+default:
   image: haskell:8.10.7
+
+stages:
+  - build
+  - deploy
+
+build_test_doc:
+  stage: build
   script:
     - cabal update
     - cabal build --only-dependencies --enable-tests
     - cabal build --enable-tests
     - cabal test --test-show-details=direct
+    - cabal haddock --builddir=haddock_build --haddock-hyperlinked-source --haddock-html-location='https://hackage.haskell.org/package/$pkg-$version/docs'
+    - mv $(find haddock_build -wholename '*doc/html/lemmatchers' | head -n 1) apidocs/
+  artifacts:
+    paths:
+      - apidocs
+
+pages:
+  stage: deploy
+  only:
+    - main
+  dependencies:
+    - build_test_doc
+  script:
+    - mkdir -p public
+    - cp -r apidocs public/
+  artifacts:
+    paths:
+      - public
