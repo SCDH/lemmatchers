@@ -1,7 +1,7 @@
 cabal-version:        3.0
 name:                 lemmatchers
 version:              0.1.0.0
-synopsis:             Search tag sequences in large lemma data
+synopsis:             Tag sequences domain specific language with CLI and web interface for CSV data
 license:              MIT
 license-file:         LICENSE
 author:               Mirko Westermeier
