@@ -4,7 +4,9 @@ import Test.Hspec
 import Lemmatchers.Matchers
 import Lemmatchers.TagRecords
 import Lemmatchers.CLI
-import Data.String.Encode
+import qualified Data.ByteString.Lazy as LBS
+import qualified Data.Text as T
+import Data.Text.Encoding
 import System.FilePath
 import System.IO.Temp
 
@@ -100,8 +102,11 @@ simpleExample = describe "Simple example" $ do
   context "Command line interface" $ do
     results <- runIO $ withSystemTempDirectory "lemmatcher" $ \dir -> do
       let matchers  = dir </> "matchers.txt"
-          input     = getLenient $ convertString lemmaDataCsv
+          input     = lbs2str lemmaDataCsv
       writeFile matchers matchersString
       run [matchers] input
     it "Result is correct CSV data" $
-      convertString results `shouldBe` resultsCsv
+      str2lbs results `shouldBe` resultsCsv
+
+  where str2lbs = LBS.fromStrict . encodeUtf8 . T.pack
+        lbs2str = T.unpack . decodeUtf8 . LBS.toStrict

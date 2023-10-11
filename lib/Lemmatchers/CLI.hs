@@ -2,7 +2,9 @@ module Lemmatchers.CLI where
 
 import Lemmatchers.Matchers
 import Lemmatchers.TagRecords
-import Data.String.Encode
+import qualified Data.ByteString as LBS
+import qualified Data.Text as T
+import Data.Text.Encoding
 import System.Environment
 import System.IO
 import Control.Monad
@@ -15,7 +17,7 @@ run args input = do
   recordMatchers <- read <$> readFile (head args)
 
   -- Read data from STDIN
-  let records = csvToLemmaRecords . convertString $ input
+  let records = csvToLemmaRecords . str2lbs $ input
   let lemmi = concatMap (lemmas . lemmata) records
   report $    show (length records) ++ " records with "
           ++  show (length lemmi)   ++ " lemmata found."
@@ -28,6 +30,8 @@ run args input = do
 
   -- Write output!
   report $ show (length results) ++ " results found."
-  return $ getLenient . convertString $ matchesToCsv results
+  return $ lbs2str $ matchesToCsv results
 
-  where report = hPutStrLn stderr
+  where report  = hPutStrLn stderr
+        str2lbs = LBS.fromStrict . encodeUtf8 . T.pack
+        lbs2str = T.unpack . decodeUtf8 . LBS.toStrict

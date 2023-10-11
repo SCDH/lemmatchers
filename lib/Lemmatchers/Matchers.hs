@@ -3,9 +3,10 @@ module Lemmatchers.Matchers where
 import Lemmatchers.TagRecords
 import Data.Bool
 import Data.List
-import Data.String.Encode
 import Data.Bifunctor
 import qualified Data.ByteString.Lazy as BS
+import qualified Data.Text as T
+import Data.Text.Encoding
 import qualified Data.Vector as V
 import qualified Text.Read as R
 import Text.ParserCombinators.ReadP
@@ -123,7 +124,7 @@ instance Show Match where
 
 instance ToNamedRecord Match where
   toNamedRecord (Match m p fid fd fl) = namedRecord $
-    map (second convertString)
+    map (second (encodeUtf8 . T.pack))
       [ ("matcher",     name m)
       , ("pattern",     show p)
       , ("id_text",     fid)
@@ -132,7 +133,7 @@ instance ToNamedRecord Match where
       ]
 
 instance DefaultOrdered Match where
-  headerOrder _ = V.fromList $ map convertString $ words
+  headerOrder _ = V.fromList $ map (encodeUtf8 . T.pack) $ words
     "matcher pattern id_text Designation lemma"
 
 matchesToCsv :: [Match] -> BS.ByteString

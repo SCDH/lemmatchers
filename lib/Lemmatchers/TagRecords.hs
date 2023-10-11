@@ -1,9 +1,10 @@
 module Lemmatchers.TagRecords where
 
-import Data.String.Encode
 import Data.Csv
 import qualified Data.ByteString.Lazy as BS
 import qualified Data.Vector as V
+import qualified Data.Text as T
+import Data.Text.Encoding
 import Text.Read
 import Text.ParserCombinators.ReadP
 import Control.Monad
@@ -35,7 +36,7 @@ parseLemma = do
   return $ Lemma w t tag
 
 instance FromField Lemma where
-  parseField = maybe mzero pure . readMaybe . getLenient . convertString
+  parseField = maybe mzero pure . readMaybe . T.unpack . decodeUtf8
 
 -- Lemma stream parsing -------
 
@@ -53,7 +54,7 @@ parseLemmas = do
   return $ Lemmas ls
 
 instance FromField Lemmas where
-  parseField = maybe mzero pure . readMaybe . getLenient . convertString
+  parseField = maybe mzero pure . readMaybe . T.unpack . decodeUtf8
 
 -- CSV records ----------------
 

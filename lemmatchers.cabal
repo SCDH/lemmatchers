@@ -26,7 +26,7 @@ library
   build-depends:      base ^>=4.14.3.0
                     , bytestring
                     , cassava
-                    , encode-string
+                    , text
                     , vector
   hs-source-dirs:     lib
 
@@ -75,9 +75,10 @@ test-suite lemmatchers-test
   build-depends:      base ^>=4.14.3.0
                     , hspec
                     , lemmatchers
-                    , encode-string
+                    , bytestring
                     , filepath
                     , temporary
+                    , text
   main-is:            run-all-tests.hs
   other-modules:      LemmatchersSpec
   build-tool-depends: hspec-discover:hspec-discover
