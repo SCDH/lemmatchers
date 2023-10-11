@@ -1,13 +1,25 @@
+variables:
+  CABAL_DIR: "$CI_PROJECT_DIR/.cabal-dir"
+  CABAL_CONFIG: "$CI_PROJECT_DIR/.cabal-dir/config"
+
 default:
   image: haskell:8.10.7
+  cache:
+    key:
+      files:
+        - lemmatchers.cabal
+    paths:
+      - dist-newstyle
+      - $CABAL_DIR
 
 stages:
   - build
-  - deploy
+  - deploy_api_docs
 
 build_test_doc:
   stage: build
   script:
+    - if [ -f "$CABAL_CONFIG" ]; then cabal user-config update; else cabal user-config init; fi
     - cabal update
     - cabal build --only-dependencies --enable-tests
     - cabal build --enable-tests
@@ -19,7 +31,7 @@ build_test_doc:
       - apidocs
 
 pages:
-  stage: deploy
+  stage: deploy_api_docs
   only:
     - main
   dependencies:
