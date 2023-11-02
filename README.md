@@ -2,8 +2,8 @@
 
 **Tag sequences domain specific language with CLI and web interface for CSV data**
 
-[![build, test, docs](https://github.com/SCDH/lemmatchers/actions/workflows/haskell-ci.yml/badge.svg)](https://github.com/SCDH/lemmatchers/actions/workflows/haskell-ci.yml)
-[![API docs](https://img.shields.io/badge/API_docs-Haddock-mediumorchid?logo=bookstack&logoColor=lightgrey&labelColor=333)](https://scdh.github.io/lemmatchers/)
+[![build, test, docs](https://github.com/memowe/lemmatchers/actions/workflows/haskell-ci.yml/badge.svg)](https://github.com/memowe/lemmatchers/actions/workflows/haskell-ci.yml)
+[![API docs](https://img.shields.io/badge/API_docs-Haddock-mediumorchid?logo=bookstack&logoColor=lightgrey&labelColor=333)](https://mirko.westermeier.de/lemmatchers/)
 
 ## Requirements
 
